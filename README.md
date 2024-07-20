@@ -600,11 +600,8 @@ d. After you have lauched the project copy the hyperlink to the server and past 
 e. After the Application has been lauched,one can now use it to predict probabilities by entering information.
 
 To predict using the Application
-Click on Try it out
+Click on 'Try it out'
 f. On Loan ID enter a unique identifier such as ID (a string variable).
-g.
-
-
 
 
 10. Data Drift Detection

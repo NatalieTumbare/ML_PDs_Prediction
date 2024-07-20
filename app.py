@@ -10,7 +10,7 @@ Created on Tue Jul 16 18:12:36 2024
 #cd C:\Users\ntumbare\Desktop\ML_PDs_Prediction\ML_PDs_Prediction
 #pip install fastapi uvicorn
 #uvicorn app:app --reload
-#python app.py
+
 
 #http:127.0.0.1:800
 #http:127.0.0.1:800/docs

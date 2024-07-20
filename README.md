@@ -109,3 +109,17 @@ The 'is_employed' variable is a character/categorical data type with response fa
 This variable was checked for missing values and labelling consistence, none were found.
 The variable was encoded using binary encoding that takes up True as 0 and False as 1.
 
+h. job
+
+This variable consisted of more than 4,000 entries with missing data.
+Besides missing data the response labels were not inconsistent e.g 'Software Developer' vs 'SoftwareDeveloper' and 'Data Scintist' vs 'Data Scientist'
+These missing values were filled using the 'is_emplyed' variable.
+It was found that all the missing values on 'job' were not employed under the 'is_employed' variable i.e they were all 'FALSE'
+The 'is_employed' variable determined the replacements on the 'job' variable as follows:
+
+if 'is_employed' is 'FALSE' then job is 'Unemployed'
+
+10. Location
+This variable was checked for inconsistences and some were found.
+The variable had inconsistent response labelling, were the responses had leading spaces hence the names were repeated e.g 'Gweru', ' Gweru ', ' Gweru '.
+The variable also had missing data.

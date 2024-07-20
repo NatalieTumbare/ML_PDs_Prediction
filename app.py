@@ -28,39 +28,25 @@ import pickle
 app = FastAPI()
 
 # Load Logistic Regression model
-#with open("final_LR.pkl", "rb") as f:
-#    final_LR = pickle.load(f)
-
+  
 pickle_in = open("final_LR.pkl", "rb")
 final_LR = pickle.load(pickle_in)
 
-# Load Random Forest model
-#with open("final_RFC.pkl", "rb") as f:
- #   final_RFC = pickle.load(f)
-    
+#Load Random Forest model
 pickle_in = open("final_RFC.pkl", "rb")
 final_RFC = pickle.load(pickle_in)
 
 # Load Decision Tree model
-#with open("final_DTC.pkl", "rb") as f:
-#    final_DTC = pickle.load(f)
-
 
 pickle_in = open("final_DTC.pkl", "rb")
 final_DTC = pickle.load(pickle_in)
     
 ## Load Gradient Boosting model
-#with open("final_GBC.pkl", "rb") as f:
- #   final_GBC = pickle.load(f)
- 
  
 pickle_in = open("final_GBC.pkl", "rb")
 final_GBC = pickle.load(pickle_in)
 
-## Load K-Nearest Neighbour model
-#with open("final_LDA.pkl", "rb") as f:
-#    final_LDA = pickle.load(f)
-
+## Load Linear Discriminant model
 
 pickle_in = open("final_LDA.pkl", "rb")
 final_LDA = pickle.load(pickle_in)
@@ -139,48 +125,91 @@ def predict(input_data: PredictInput):
     X_input = np.array([[loan_amount, number_of_defaults, outstanding_balance, interest_rate, age, remaining_term, salary, gender_female, gender_male, gender_other, marital_status_divorced, marital_status_married, marital_status_single, marital_status_unknown, province_Bulawayo, province_Harare, province_Manicaland, province_Mashonaland_East, province_Mashonaland_West,  province_Masvingo, province_Matabeleland_North, province_Matabeleland_South, province_Midlands, province_Not_Specified]])
 
     # Make predictions using the individual models
+#    y_pred_LR = final_LR.predict(X_input)[0]
+#    y_pred_RFC = final_RFC.predict(X_input)[0]
+#    y_pred_DTC = final_DTC.predict(X_input)[0]
+#    y_pred_GBC = final_GBC.predict(X_input)[0]
+#    y_pred_LDA = final_LDA.predict(X_input)[0]
+    
+     
+ # Convert the predictions to human-readable format
+ #   if  y_pred_LR == 1:
+ #       y_pred_LR_str = "Defaulted"
+ #   else:
+ #       y_pred_LR_str = "Did Not Default"
+
+ #   if y_pred_RFC == 1:
+  #      y_pred_RFC_str = "Defaulted"
+ #   else:
+ #       y_pred_RFC_str = "Did Not Default"
+
+#  if y_pred_DTC == 1:
+#        y_pred_DTC_str = "Defaulted"
+ #   else:
+#        y_pred_DTC_str = "Did Not Default"
+
+#    if y_pred_GBC == 1:
+#        y_pred_GBC_str = "Defaulted"
+#    else:
+#        y_pred_GBC_str = "Did Not Default"
+
+ #   if y_pred_LDA == 1:
+ #       y_pred_LDA_str = "Defaulted"
+ #   else:
+  #      y_pred_LDA_str = "Did Not Default"
+
+  #  return {
+   #     'Logistic': y_pred_LR_str,
+    #    'Random_Forest': y_pred_RFC_str,
+     #   'Decision_Tree': y_pred_DTC_str,
+     #   'Gradient_Boosting': y_pred_GBC_str,
+      #  'Linear Discriminant': y_pred_LDA_str
+   # }
+
+#def get_predictions(X_input):
+    # Make predictions using the individual models
     y_pred_LR = final_LR.predict(X_input)[0]
     y_pred_RFC = final_RFC.predict(X_input)[0]
     y_pred_DTC = final_DTC.predict(X_input)[0]
     y_pred_GBC = final_GBC.predict(X_input)[0]
     y_pred_LDA = final_LDA.predict(X_input)[0]
-     
- # Convert the predictions to human-readable format
-    if y_pred_LR == 1:
-        y_pred_LR_str = "Defaulted"
-    else:
-        y_pred_LR_str = "Did Not Default"
 
-    if y_pred_RFC == 1:
-        y_pred_RFC_str = "Defaulted"
-    else:
-        y_pred_RFC_str = "Did Not Default"
+    # Convert the predictions to human-readable format
+    y_pred_LR_str = "Defaulted" if y_pred_LR == 1 else "Did Not Default"
+    y_pred_RFC_str = "Defaulted" if y_pred_RFC == 1 else "Did Not Default"
+    y_pred_DTC_str = "Defaulted" if y_pred_DTC == 1 else "Did Not Default"
+    y_pred_GBC_str = "Defaulted" if y_pred_GBC == 1 else "Did Not Default"
+    y_pred_LDA_str = "Defaulted" if y_pred_LDA == 1 else "Did Not Default"
 
-    if y_pred_DTC == 1:
-        y_pred_DTC_str = "Defaulted"
-    else:
-        y_pred_DTC_str = "Did Not Default"
-
-    if y_pred_GBC == 1:
-        y_pred_GBC_str = "Defaulted"
-    else:
-        y_pred_GBC_str = "Did Not Default"
-
-    if y_pred_LDA == 1:
-        y_pred_LDA_str = "Defaulted"
-    else:
-        y_pred_LDA_str = "Did Not Default"
+    # Get the probability predictions
+    y_pred_proba_LR = final_LR.predict_proba(X_input)[0][1]
+    y_pred_proba_RFC = final_RFC.predict_proba(X_input)[0][1]
+    y_pred_proba_DTC = final_DTC.predict_proba(X_input)[0][1]
+    y_pred_proba_GBC = final_GBC.predict_proba(X_input)[0][1]
+    y_pred_proba_LDA = final_LDA.predict_proba(X_input)[0][1]
 
     return {
-        'Logistic': y_pred_LR_str,
-        'Random_Forest': y_pred_RFC_str,
-        'Decision_Tree': y_pred_DTC_str,
-        'Gradient_Boosting': y_pred_GBC_str,
-        'Linear Discriminant': y_pred_LDA_str
+        'Logistic': {
+            'status': y_pred_LR_str,
+            'probability': y_pred_proba_LR
+        },
+        'Random_Forest': {
+            'status': y_pred_RFC_str,
+            'probability': y_pred_proba_RFC
+        },
+        'Decision_Tree': {
+            'status': y_pred_DTC_str,
+            'probability': y_pred_proba_DTC
+        },
+        'Gradient_Boosting': {
+            'status': y_pred_GBC_str,
+            'probability': y_pred_proba_GBC
+        },
+        'Linear Discriminant': {
+            'status': y_pred_LDA_str,
+            'probability': y_pred_proba_LDA
+        }
     }
-
- # Round the final prediction to 0 or 1
- #   return {"prediction": int(final_pred > 0.5)}
 
 # 6. Run the FastAPI Application
 if __name__ == "__main__":
@@ -189,18 +218,13 @@ if __name__ == "__main__":
 ##uvicorn app:app --reload
 
 
+  
 
+    
 
+  
 
-
-
-
-
-
-
-
-
-
+   
 
 
 													
